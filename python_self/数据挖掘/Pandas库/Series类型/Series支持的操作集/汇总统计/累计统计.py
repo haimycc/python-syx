@@ -1,0 +1,20 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df=pd.DataFrame(
+    [
+        [1.4,np.nan],
+        [7.1,-4.5],
+        [np.nan,np.nan],
+        [0.75,-1.3]
+    ],
+    index=['a','b','c','d'],
+    columns=["one","two"]
+)
+
+#累计统计,按行
+df2=df.cumsum()
+print(df2)
+
+

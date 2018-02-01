@@ -1,0 +1,44 @@
+#!/bin/bash
+
+tmpfile="/tmp/zxo.redis.log"
+rm $tmpfile
+
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7000 -c keys "Person.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7001 -c keys "Person.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7002 -c keys "Person.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7003 -c keys "Person.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7004 -c keys "Person.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7005 -c keys "Person.investSum_*" >> $tmpfile
+
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7000 -c keys "Person.loan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7001 -c keys "Person.loan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7002 -c keys "Person.loan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7003 -c keys "Person.loan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7004 -c keys "Person.loan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7005 -c keys "Person.loan.investSum_*" >> $tmpfile
+
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7000 -c keys "Person.plan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7001 -c keys "Person.plan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7002 -c keys "Person.plan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7003 -c keys "Person.plan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7004 -c keys "Person.plan.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7005 -c keys "Person.plan.investSum_*" >> $tmpfile
+
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7000 -c keys "Person.debt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7001 -c keys "Person.debt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7002 -c keys "Person.debt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7003 -c keys "Person.debt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7004 -c keys "Person.debt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7005 -c keys "Person.debt.investSum_*" >> $tmpfile
+
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7000 -c keys "Person.xrdt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7001 -c keys "Person.xrdt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7002 -c keys "Person.xrdt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7003 -c keys "Person.xrdt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7004 -c keys "Person.xrdt.investSum_*" >> $tmpfile
+/usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7005 -c keys "Person.xrdt.investSum_*" >> $tmpfile
+
+cat $tmpfile | while read line
+do
+        /usr/local/redis1/bin/redis-cli -h 192.168.2.104 -p 7001 -c del "$line"
+done
