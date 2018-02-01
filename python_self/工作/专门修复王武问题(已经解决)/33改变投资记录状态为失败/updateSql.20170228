@@ -1,0 +1,1 @@
+update product.t_assets set state=5,full_time='0000-00-00 00:00:00',investor_count=0,raised_amount=0 where asset_id = 20170228000016223  

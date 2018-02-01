@@ -1,0 +1,46 @@
+# -*- coding:utf-8 -*-
+#获取python内置函数类型的名字空间
+print(dir(type))
+#['__abstractmethods__',
+# '__base__',
+# '__bases__',
+# '__basicsize__',
+#  '__call__',
+# '__class__',
+# '__delattr__',
+# '__dict__',
+# '__dictoffset__',
+#  '__dir__',
+#  '__doc__', 函数文档
+# '__eq__',
+# '__flags__',
+#  '__format__',
+#  '__ge__',
+# '__getattribute__',
+# '__gt__',
+# '__hash__',
+# '__init__',
+#  '__instancecheck__',
+#  '__itemsize__',
+# '__le__',
+# '__lt__',
+# '__module__',定义函数的模块
+# '__mro__',
+# '__name__',函数名
+# '__ne__',
+# '__new__',
+#  '__prepare__',
+#  '__qualname__',
+# '__reduce__',
+# '__reduce_ex__',
+#  '__repr__',
+# '__setattr__',
+# '__sizeof__',
+# '__str__',
+# '__subclasscheck__',
+#  '__subclasses__',
+# '__subclasshook__',
+# '__text_signature__',
+#  '__weakrefoffset__',
+# 'mro'
+# ]

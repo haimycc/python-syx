@@ -1,0 +1,3 @@
+update user.t_user_attr_000 set value=0 where userid=201609230000004000 and name='isnew';
+update invest.t_investment_00 set state=3 where investor_uid=201609230000004000 and asset_id=20170105000014329;
+update invest.t_investments set state=3 where investor_uid=201609230000004000 and asset_id=20170105000014329;
