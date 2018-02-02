@@ -148,9 +148,9 @@ class JzPythonJenkins(object):
         for job in jobs:
             self.changeBranch(job["name"], branchName.strip())
         if commonName:
-            self.bulid(commonName)
+            self.bulid(self.getJobName(commonName))
         else:
-            self.bulid("Common")
+            self.bulid(self.getJobName("Common"))
 
     def bulidFromFile(self, filePath):
         file = codecs.open(filePath, "r", "utf-8")
@@ -180,9 +180,10 @@ class JzPythonJenkins(object):
 
 if __name__ == "__main__":
     # 174
-    jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
-    # 175
+    # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
+    #175
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
+    # jenkins.changeAllBulid("goldmaster")
     # 切换一个分支并且编译
     # jenkins.changeBranchAndBuild("AccountAdminWeb", "goldmaster")
     # 切换所有分支为主干分支 并且编译Common
@@ -193,7 +194,9 @@ if __name__ == "__main__":
     #TrusteeSchedule,gm-合伙人
     #UserAdminWeb,bbbb
     ##########################
-    jenkins.bulidFromFile("D:\编译分支.txt")
 
+    # jenkins.bulidFromFile("D:\编译分支.txt")
+    # 154
+    jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
     #获取分支
-    # jenkins.getAllBranch("175", "goldmaster")
+    jenkins.getAllBranch("154", "master")

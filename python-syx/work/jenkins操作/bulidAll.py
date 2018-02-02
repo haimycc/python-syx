@@ -65,9 +65,9 @@ class JzPythonJenkins(object):
         for job in jobs:
             self.changeBranch(job["name"], branchName.strip())
         if commonName:
-            self.bulid(commonName)
+            self.bulid(self.getJobName(commonName))
         else:
-            self.bulid("Common")
+            self.bulid(self.getJobName("Common"))
 
 if __name__ == "__main__":
     cf = configparser.ConfigParser()
