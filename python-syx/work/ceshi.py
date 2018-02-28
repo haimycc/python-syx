@@ -1,3 +1,3 @@
-str = "  ddd   "
-print(str)
-print(str.strip())
+import os
+
+print(os.getcwd())

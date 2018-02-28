@@ -84,7 +84,8 @@ class JzPythonJenkins(object):
 
 if __name__ == "__main__":
     cf = configparser.ConfigParser()
-    cf.read("D:\jenkinsConfig.txt")
+    configDir = os.getcwd()
+    cf.read(configDir + "\jenkinsConfig.txt")
     sections = cf.sections()
     username = str(cf.get("config", "username")).strip()
     password = str(cf.get("config", "password")).strip()
@@ -92,7 +93,7 @@ if __name__ == "__main__":
     view = str(cf.get("config", "view")).strip()
     try:
         jenkins = JzPythonJenkins(username, password, url, view)
-        jenkins.bulidFromFile("D:\编译分支.txt")
+        jenkins.bulidFromFile(configDir + "\编译分支.txt")
     except Exception as e:
         print(e)
     finally:

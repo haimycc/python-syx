@@ -180,12 +180,14 @@ class JzPythonJenkins(object):
 
 if __name__ == "__main__":
     # 174
-    # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
+    jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
     #175
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
     # jenkins.changeAllBulid("goldmaster")
     # 切换一个分支并且编译
     # jenkins.changeBranchAndBuild("AccountAdminWeb", "goldmaster")
+    # jenkins.changeBranchAndBuild("AssetWeb", "gm-syx-社会码脱敏")
+    jenkins.changeBranchAndBuild("WapWeb", "gm-syx-智投天标")
     # 切换所有分支为主干分支 并且编译Common
     # jenkins.changeAllBulid("goldmaster")
     #从文件读取分支并且编译
@@ -197,6 +199,6 @@ if __name__ == "__main__":
 
     # jenkins.bulidFromFile("D:\编译分支.txt")
     # 154
-    jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
+    # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
     #获取分支
-    jenkins.getAllBranch("154", "master")
+    # jenkins.getAllBranch("174", "goldmaster")

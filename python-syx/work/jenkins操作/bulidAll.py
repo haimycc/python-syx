@@ -71,7 +71,8 @@ class JzPythonJenkins(object):
 
 if __name__ == "__main__":
     cf = configparser.ConfigParser()
-    cf.read("D:\jenkinsConfig.txt")
+    configDir = os.getcwd()
+    cf.read(configDir + "\jenkinsConfig.txt")
     sections = cf.sections()
     username = str(cf.get("config", "username")).strip()
     password = str(cf.get("config", "password")).strip()
