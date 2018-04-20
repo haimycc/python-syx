@@ -120,10 +120,19 @@ class JzPythonJenkins(object):
     def changeBranch(self, jobName, branchName):
         fullJobName = self.getJobName(jobName)
         job_config = self.server.get_job_config(fullJobName)
-        patten = '(?<=\*/).*(?=</name>)'
-        reconfig = re.sub(patten, branchName.strip(), job_config, 0)
-        self.server.reconfig_job(fullJobName, reconfig)
+        # print(job_config)
+        # patten = '(?<=\*/).*(?=</name>)'
+        # reconfig = re.sub(patten, branchName.strip(), job_config, 0)
+        try:
+            patten2 = 'svn.zyxr.com'
+            reconfig = re.sub(patten2, 'git.zyxr.com', job_config, 0)
+            self.server.reconfig_job(fullJobName, reconfig)
+        except:
+            pass
+
         print(str(jobName).strip() + "将分支从 " + self.getBranchName(job_config) + " --> " + branchName)
+
+
 
     # 切换分支并且编译
     def changeBranchAndBuild(self, jobName, branchName):
@@ -180,16 +189,19 @@ class JzPythonJenkins(object):
 
 if __name__ == "__main__":
     # 174
-    jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
+    # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
+    # 103
+    # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
+    jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.104:8081/jenkins/", "ZYXR")
     #175
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
     # jenkins.changeAllBulid("goldmaster")
     # 切换一个分支并且编译
     # jenkins.changeBranchAndBuild("AccountAdminWeb", "goldmaster")
     # jenkins.changeBranchAndBuild("AssetWeb", "gm-syx-社会码脱敏")
-    jenkins.changeBranchAndBuild("WapWeb", "gm-syx-智投天标")
+    # jenkins.changeBranch("ProductWeb", "master")
     # 切换所有分支为主干分支 并且编译Common
-    # jenkins.changeAllBulid("goldmaster")
+    jenkins.changeAllBulid("master")
     #从文件读取分支并且编译
     ########文件格式###########
     #AssetAdminWeb,goldmaster
@@ -201,4 +213,4 @@ if __name__ == "__main__":
     # 154
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
     #获取分支
-    # jenkins.getAllBranch("174", "goldmaster")
+    # jenkins.getAllBranch("126", "master")
