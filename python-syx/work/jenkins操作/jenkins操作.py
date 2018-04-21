@@ -20,7 +20,7 @@ class JzPythonJenkins(object):
         global globalName
         globalName = foldName
         # password = '924524abef31e057df10f9c4e2dd669a'
-        timeout = 1
+        timeout = 100
         self.server = self.Connect(url, username, password, timeout)
 
     def Used(self):
@@ -123,14 +123,16 @@ class JzPythonJenkins(object):
         # print(job_config)
         # patten = '(?<=\*/).*(?=</name>)'
         # reconfig = re.sub(patten, branchName.strip(), job_config, 0)
-        try:
-            patten2 = 'svn.zyxr.com'
-            reconfig = re.sub(patten2, 'git.zyxr.com', job_config, 0)
-            self.server.reconfig_job(fullJobName, reconfig)
-        except:
-            pass
 
-        print(str(jobName).strip() + "将分支从 " + self.getBranchName(job_config) + " --> " + branchName)
+        patten2 = '(?<=\<url>).*(?=</url>)'
+        # reconfig = re.sub(patten2, 'http://git.zyxr.com/NP/' + str(jobName).strip() +'.git', job_config, 0)
+        # self.server.reconfig_job(fullJobName, reconfig)
+        # search = re.search(patten2, reconfig)
+        search = re.search(patten2, job_config)
+
+        print(search)
+
+        # print(str(jobName).strip() + "将分支从 " + self.getBranchName(job_config) + " --> " + branchName)
 
 
 
@@ -156,10 +158,10 @@ class JzPythonJenkins(object):
         jobs = self.server.get_all_jobs()
         for job in jobs:
             self.changeBranch(job["name"], branchName.strip())
-        if commonName:
-            self.bulid(self.getJobName(commonName))
-        else:
-            self.bulid(self.getJobName("Common"))
+            if commonName:
+                self.bulid(self.getJobName(commonName))
+            else:
+                self.bulid(self.getJobName("Common"))
 
     def bulidFromFile(self, filePath):
         file = codecs.open(filePath, "r", "utf-8")
@@ -191,8 +193,10 @@ if __name__ == "__main__":
     # 174
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
     # 103
+    # jenkins = JzPythonJenkins("admin", "zyxr123456", "http://192.168.9.152:8081/jenkins/", "ZYXR")
+    # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.104:8081/jenkins/", "ZYXR")
+    jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
-    jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.104:8081/jenkins/", "ZYXR")
     #175
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
     # jenkins.changeAllBulid("goldmaster")
