@@ -21,7 +21,7 @@ class JzPythonJenkins(object):
     def __init__(self, username, password, url, foldName):
         global globalName
         globalName = foldName
-        self.server = self.Connect(url, username, password, 1)
+        self.server = self.Connect(url, username, password, 100)
 
     def Connect(self, url, username, password, timeout):
         '''Create handle to Jenkins instance'''

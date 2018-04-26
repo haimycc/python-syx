@@ -121,14 +121,19 @@ class JzPythonJenkins(object):
         fullJobName = self.getJobName(jobName)
         job_config = self.server.get_job_config(fullJobName)
         # print(job_config)
+
         # patten = '(?<=\*/).*(?=</name>)'
         # reconfig = re.sub(patten, branchName.strip(), job_config, 0)
+        # self.server.reconfig_job(fullJobName, reconfig)
 
         patten2 = '(?<=\<url>).*(?=</url>)'
+
         # reconfig = re.sub(patten2, 'http://git.zyxr.com/NP/' + str(jobName).strip() +'.git', job_config, 0)
         # self.server.reconfig_job(fullJobName, reconfig)
         # search = re.search(patten2, reconfig)
+
         search = re.search(patten2, job_config)
+
 
         print(search)
 
@@ -158,10 +163,10 @@ class JzPythonJenkins(object):
         jobs = self.server.get_all_jobs()
         for job in jobs:
             self.changeBranch(job["name"], branchName.strip())
-            if commonName:
-                self.bulid(self.getJobName(commonName))
-            else:
-                self.bulid(self.getJobName("Common"))
+        # if commonName:
+        #     self.bulid(self.getJobName(commonName))
+        # else:
+        #     self.bulid(self.getJobName("Common"))
 
     def bulidFromFile(self, filePath):
         file = codecs.open(filePath, "r", "utf-8")
@@ -176,18 +181,22 @@ class JzPythonJenkins(object):
                 break
         file.close()
 
-    def getAllBranch(self, urlname, mastername):
+    def changeAllRepository(self):
         jobs = self.server.get_all_jobs()
-        print("当前环境为[" + urlname + "]" + "主分支为[" + mastername + "]")
-        flag = True
         for job in jobs:
-            job_config = self.server.get_job_config(job["fullname"])
-            branch_name = self.getBranchName(job_config)
-            if mastername.strip() != branch_name.strip():
-                print(job["fullname"] + " 当前分支为--> " + branch_name)
-                flag = False
-        if flag:
-            print("所有分支均为" + mastername)
+            fullJobName = self.getJobName(job["name"])
+            job_config = self.server.get_job_config(fullJobName)
+            # print(job_config)
+            patten = '(?<=\<url>)http(?=\:)'
+            search = re.search(patten, job_config)
+            # print(search)
+            if (search):
+                reconfig = re.sub(patten, 'https', job_config, 0)
+                self.server.reconfig_job(fullJobName, reconfig)
+                print(fullJobName + "修改成功")
+            # search = re.search(patten2, job_config)
+            # print(search)
+
 
 if __name__ == "__main__":
     # 174
@@ -195,7 +204,8 @@ if __name__ == "__main__":
     # 103
     # jenkins = JzPythonJenkins("admin", "zyxr123456", "http://192.168.9.152:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.104:8081/jenkins/", "ZYXR")
-    jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
+    # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
+    jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.116:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
     #175
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
@@ -205,7 +215,7 @@ if __name__ == "__main__":
     # jenkins.changeBranchAndBuild("AssetWeb", "gm-syx-社会码脱敏")
     # jenkins.changeBranch("ProductWeb", "master")
     # 切换所有分支为主干分支 并且编译Common
-    jenkins.changeAllBulid("master")
+    # jenkins.changeAllBulid("master")
     #从文件读取分支并且编译
     ########文件格式###########
     #AssetAdminWeb,goldmaster
@@ -218,3 +228,6 @@ if __name__ == "__main__":
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
     #获取分支
     # jenkins.getAllBranch("126", "master")
+
+    #切换仓库
+    jenkins.changeAllRepository()
