@@ -1,3 +1,3 @@
-import os
+s =str(26372533830159682);
 
-print(os.getcwd())
+print(s[-2:])
