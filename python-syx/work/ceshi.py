@@ -1,3 +1,4 @@
-s =str(26372533830159682);
-
-print(s[-2:])
+import os
+sharePath = '\\\\192.168.150.210\\公司共享\\APP'
+fileList = os.listdir(sharePath)
+print(fileList)

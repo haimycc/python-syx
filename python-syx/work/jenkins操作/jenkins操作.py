@@ -125,8 +125,6 @@ class JzPythonJenkins(object):
         self.server.reconfig_job(fullJobName, reconfig)
         print(str(jobName).strip() + "将分支从 " + self.getBranchName(job_config) + " --> " + branchName)
 
-
-
     # 切换分支并且编译
     def changeBranchAndBuild(self, jobName, branchName):
         fullJobName = self.getJobName(jobName)
@@ -162,17 +160,21 @@ class JzPythonJenkins(object):
             lines = file.readline(100000)
             if lines:
                 split = str(lines).strip().split(",")
-                #项目名必须和jenkins中的名字相同,否则找不到项目
+                # 项目名必须和jenkins中的名字相同,否则找不到项目
                 self.changeBranchAndBuild(split[0], split[1])
             else:
                 break
         file.close()
 
-    #根据正则替换内容 only就只看正则能替换的部分
+    # 根据正则替换内容 only就只看正则能替换的部分
     def changeByPatten(self, patten, value, only_show):
         jobs = self.server.get_all_jobs()
         for job in jobs:
             fullJobName = self.getJobName(job["name"])
+            # if ('App' in job["name"] or 'Schedule' in job["name"]):
+            #     value = '<execCommand>cd /usr/local/dubbox/; ./' + job["name"] + '.sh restart</execCommand>'
+            # else:
+            #     continue
             job_config = self.server.get_job_config(fullJobName)
             # print(job_config)
             # patten = '(?<=\<url>)http(?=\:)'
@@ -185,23 +187,27 @@ class JzPythonJenkins(object):
                 # print(reconfig)
                 self.server.reconfig_job(fullJobName, reconfig)
                 print(fullJobName + "修改成功")
-            # search = re.search(patten, job_config)
-            # print(search)
+                # search = re.search(patten, job_config)
+                # print(search)
 
-    def getAllBranch(self, urlname, mastername):
+    def getAllBranch(self, urlname, mastername, findBug):
         jobs = self.server.get_all_jobs()
         print("当前环境为[" + urlname + "]" + "主分支为[" + mastername + "]")
         flag = True
         for job in jobs:
             job_config = self.server.get_job_config(job["fullname"])
             branch_name = self.getBranchName(job_config)
-            if mastername.strip() != branch_name.strip():
+            if findBug:
                 print(job["fullname"] + " 当前分支为--> " + branch_name)
                 flag = False
+            else:
+                if mastername.strip() != branch_name.strip():
+                    print(job["fullname"] + " 当前分支为--> " + branch_name)
+                    flag = False
         if flag:
             print("所有分支均为" + mastername)
 
-    #同步不同环境的相同配置
+    # 同步不同环境的相同配置
     def syncSettingInfo(self, target):
         jobs = self.server.get_all_jobs()
         for job in jobs:
@@ -209,16 +215,20 @@ class JzPythonJenkins(object):
             target.server.create_job(job["fullname"], config)
             print(job["fullname"] + " 已经创建")
 
+
 if __name__ == "__main__":
     # 174
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
+    # jenkins = JzPythonJenkins("admin", "a123456", "http://10.3.100.109:8081/jenkins/", "ZYFAX")
+    # jenkins.getAllBranch("109", "master", True)
     # 103
     # jenkins = JzPythonJenkins("admin", "zyxr123456", "http://192.168.9.152:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.104:8081/jenkins/", "ZYXR")
-    # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
+    jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.116:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
-    #175
+    # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.122:8081/jenkins/", "ZYXR")
+    # 175
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
     # jenkins.changeAllBulid("goldmaster")
     # 切换一个分支并且编译
@@ -227,27 +237,34 @@ if __name__ == "__main__":
     # jenkins.changeBranch("ProductWeb", "master")
     # 切换所有分支为主干分支 并且编译Common
     # jenkins.changeAllBulid("master")
-    #从文件读取分支并且编译
+    # 从文件读取分支并且编译
     ########文件格式###########
-    #AssetAdminWeb,goldmaster
-    #TrusteeSchedule,gm-合伙人
-    #UserAdminWeb,bbbb
+    # AssetAdminWeb,goldmaster
+    # TrusteeSchedule,gm-合伙人
+    # UserAdminWeb,bbbb
     ##########################
 
     # jenkins.bulidFromFile("D:\编译分支.txt")
     # 154
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
-    #获取分支
+    # 获取分支
     # jenkins.getAllBranch("126", "master")
 
-    #切换仓库
+    # 切换仓库
     # jenkins.changeAllRepository()
     # jenkins.getAllBranch("174", "master")
+    # 切换用户
     # jenkins175.changeByPatten('(?<=<credentialsId>).*(?=</credentialsId>)', '512d8ac1-c91f-4f09-800a-3c8c25640b3c')
     # jenkins = JzPythonJenkins("admin", "a123456", "http://10.3.100.106:8081/jenkins/", "ZYFAX")
     # jenkins.changeByPatten('(?<=<credentialsId>).*(?=</credentialsId>)', '92ac09dc-b6ea-44d0-977e-5940c61e054b', False)
+    # 同步配置
     # jenkins175.syncSettingInfo(jenkins)
-    # jenkins.getAllBranch("102", "master")
-    # jenkins.changeAllBulid('master')
-    jenkins9 = JzPythonJenkins("admin", "a123456", "http://10.3.100.109:8081/jenkins/", "ZYFAX")
-    jenkins9.changeAllBulid('master')
+
+    # 修改处理语句
+    # jenkins9.changeByPatten('(?<=<execCommand>).*(?=</execCommand>)', 'cd /usr/local/dubbox/; ./AdminApp.sh restart', False)
+    # jenkins9.changeByPatten('<execCommand/>', 'cd /usr/local/dubbox/; ./AdminApp.sh restart', False)
+    # jenkins.changeByPatten('(?<=\<url>)https(?=\:)', 'http', True)
+    #http改https
+    jenkins.changeByPatten('(?<=\<url>)http(?=\:)', 'https', False)
+
+    # jenkins9.changeAllBulid('master')
