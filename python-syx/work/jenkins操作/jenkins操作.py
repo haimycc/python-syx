@@ -220,7 +220,28 @@ class JzPythonJenkins(object):
         jobs = self.server.get_all_jobs()
         for job in jobs:
             if "Interface" in job["name"]:
-                self.changeBranch(job["name"], "master")
+                self.changeBranchAndBuild(job["name"], "master")
+
+    # 只编interface
+    def bulidNecessarilyInterface(self):
+        jobs = self.server.get_all_jobs()
+        for job in jobs:
+            if "Interface" in job["name"]:
+                config = self.server.get_job_config(job["fullname"])
+                branchName = self.getBranchName(config)
+                if "master" not in branchName:
+                    self.changeBranchAndBuild(job["name"], "master")
+        print("编译完成")
+
+    # 只编非master分支
+    def bulidNotMasterToMaster(self):
+        jobs = self.server.get_all_jobs()
+        for job in jobs:
+            config = self.server.get_job_config(job["fullname"])
+            branchName = self.getBranchName(config)
+            if "master" not in branchName:
+                self.changeBranchAndBuild(job["name"], "master")
+        print("编译完成")
 
 
 if __name__ == "__main__":
@@ -231,12 +252,12 @@ if __name__ == "__main__":
     # 103
     # jenkins = JzPythonJenkins("admin", "zyxr123456", "http://192.168.9.152:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.104:8081/jenkins/", "ZYXR")
-    jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
+    # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.116:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.122:8081/jenkins/", "ZYXR")
     # 175
-    # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
+    jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
     # jenkins.changeAllBulid("goldmaster")
     # 切换一个分支并且编译
     # jenkins.changeBranchAndBuild("AccountAdminWeb", "goldmaster")
@@ -271,8 +292,10 @@ if __name__ == "__main__":
     # jenkins9.changeByPatten('(?<=<execCommand>).*(?=</execCommand>)', 'cd /usr/local/dubbox/; ./AdminApp.sh restart', False)
     # jenkins9.changeByPatten('<execCommand/>', 'cd /usr/local/dubbox/; ./AdminApp.sh restart', False)
     # jenkins.changeByPatten('(?<=\<url>)https(?=\:)', 'http', True)
-    #http改https
+    # http改https
     # jenkins.changeByPatten('(?<=\<url>)http(?=\:)', 'https', False)
 
     # jenkins9.changeAllBulid('master')
-    jenkins.bulidAllInterface()
+    # jenkins.bulidAllInterface()
+    # jenkins.bulidNecessarilyInterface()
+    jenkins.bulidNotMasterToMaster()

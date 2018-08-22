@@ -100,8 +100,6 @@ class JzPythonJenkins(object):
                     self.changeBranchAndBuild(job["name"], "master")
         print("编译完成")
 
-
-#除了common之外重编所有Interface
 if __name__ == "__main__":
     cf = configparser.ConfigParser()
     configDir = os.getcwd()
@@ -113,7 +111,7 @@ if __name__ == "__main__":
     view = str(cf.get("config", "view")).strip()
     try:
         jenkins = JzPythonJenkins(username, password, url, view)
-        jenkins.bulidAllInterface()
+        jenkins.bulidNecessarilyInterface()
     except Exception as e:
         print(e)
     finally:
