@@ -215,6 +215,13 @@ class JzPythonJenkins(object):
             target.server.create_job(job["fullname"], config)
             print(job["fullname"] + " 已经创建")
 
+    # 只编interface
+    def bulidAllInterface(self):
+        jobs = self.server.get_all_jobs()
+        for job in jobs:
+            if "Interface" in job["name"]:
+                self.changeBranch(job["name"], "master")
+
 
 if __name__ == "__main__":
     # 174
@@ -265,6 +272,7 @@ if __name__ == "__main__":
     # jenkins9.changeByPatten('<execCommand/>', 'cd /usr/local/dubbox/; ./AdminApp.sh restart', False)
     # jenkins.changeByPatten('(?<=\<url>)https(?=\:)', 'http', True)
     #http改https
-    jenkins.changeByPatten('(?<=\<url>)http(?=\:)', 'https', False)
+    # jenkins.changeByPatten('(?<=\<url>)http(?=\:)', 'https', False)
 
     # jenkins9.changeAllBulid('master')
+    jenkins.bulidAllInterface()
