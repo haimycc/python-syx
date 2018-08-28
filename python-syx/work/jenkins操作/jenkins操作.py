@@ -243,6 +243,15 @@ class JzPythonJenkins(object):
                 self.changeBranchAndBuild(job["name"], "master")
         print("编译完成")
 
+    # 只编interface
+    def bulidInterfaceNotMaster(self):
+        jobs = self.server.get_all_jobs()
+        for job in jobs:
+            if "Interface" in job["name"]:
+                config = self.server.get_job_config(job["fullname"])
+                branchName = self.getBranchName(config)
+                if "master" not in branchName:
+                    self.bulid(self.getJobName(job["name"]))
 
 if __name__ == "__main__":
     # 174
@@ -298,4 +307,5 @@ if __name__ == "__main__":
     # jenkins9.changeAllBulid('master')
     # jenkins.bulidAllInterface()
     # jenkins.bulidNecessarilyInterface()
-    jenkins.bulidNotMasterToMaster()
+    # jenkins.bulidNotMasterToMaster()
+    jenkins.bulidInterfaceNotMaster()

@@ -83,22 +83,17 @@ class JzPythonJenkins(object):
         file.close()
 
     # 只编interface
-    def bulidAllInterface(self):
+    def bulidInterfaceNotMaster(self):
         jobs = self.server.get_all_jobs()
         for job in jobs:
             if "Interface" in job["name"]:
-                self.changeBranchAndBuild(job["name"], "master")
+                config = self.server.get_job_config(job["fullname"])
+                branchName = self.getBranchName(config)
+                if "master" not in branchName:
+                    self.bulid(self.getJobName(job["name"]))
 
-    # 只编非master分支
-    def bulidNotMasterToMaster(self):
-        jobs = self.server.get_all_jobs()
-        for job in jobs:
-            config = self.server.get_job_config(job["fullname"])
-            branchName = self.getBranchName(config)
-            if "master" not in branchName:
-                self.changeBranchAndBuild(job["name"], "master")
-        print("编译完成")
 
+#除了common之外重编所有Interface
 if __name__ == "__main__":
     cf = configparser.ConfigParser()
     configDir = os.getcwd()
@@ -110,7 +105,7 @@ if __name__ == "__main__":
     view = str(cf.get("config", "view")).strip()
     try:
         jenkins = JzPythonJenkins(username, password, url, view)
-        jenkins.bulidNotMasterToMaster()
+        jenkins.bulidInterfaceNotMaster()
     except Exception as e:
         print(e)
     finally:
