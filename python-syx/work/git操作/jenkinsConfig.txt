@@ -1,0 +1,7 @@
+[config]
+username=admin
+password=a123456
+url=http://192.168.9.175:8081/jenkins/
+view=ZYFAX
+mastername=master
+moduleRoot=D:\HNXJ\allBranchs\
