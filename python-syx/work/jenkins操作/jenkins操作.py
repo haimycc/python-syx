@@ -253,6 +253,7 @@ class JzPythonJenkins(object):
                 if "master" not in branchName:
                     self.bulid(self.getJobName(job["name"]))
 
+
 if __name__ == "__main__":
     # 174
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
@@ -302,10 +303,14 @@ if __name__ == "__main__":
     # jenkins9.changeByPatten('<execCommand/>', 'cd /usr/local/dubbox/; ./AdminApp.sh restart', False)
     # jenkins.changeByPatten('(?<=\<url>)https(?=\:)', 'http', True)
     # http改https
-    # jenkins.changeByPatten('(?<=\<url>)http(?=\:)', 'https', False)
+    # config = jenkins.server.get_job_config("ZYFAX/AccountAdminWeb")
+    # print(config)
+    jenkins.changeByPatten('<remoteDirectory>webapps</remoteDirectory>',
+                           '''<remoteDirectory>tomcat</remoteDirectory>''',
+                           False)
 
     # jenkins9.changeAllBulid('master')
     # jenkins.bulidAllInterface()
     # jenkins.bulidNecessarilyInterface()
     # jenkins.bulidNotMasterToMaster()
-    jenkins.bulidInterfaceNotMaster()
+    # jenkins.bulidInterfaceNotMaster()

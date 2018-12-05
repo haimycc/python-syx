@@ -13,5 +13,10 @@ def getAll(sql, *args):
     new_cursor.execute(sql)
     return new_cursor.fetchall()
 
+def DBclose():
+    new_conn.close()
+
+if __name__ == '__main__':
+    pass
 
 

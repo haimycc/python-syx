@@ -15,7 +15,7 @@ class GitPython():
             if lines:
                 split = str(lines).strip().split(",")
                 # 项目名必须和jenkins中的名字相同,否则找不到项目
-                mbDict[split[0]] = split[1]
+                mbDict[split[0].strip()] = split[1].strip()
             else:
                 break
         file.close()
@@ -23,17 +23,19 @@ class GitPython():
 
     def GitPython(self, rootPath, moduleName, branchName):
         # repoPath = r'D:\python-syx'
-        replace = str(rootPath + moduleName).replace("\\", "/")
-        print(replace)
-        g = Git(replace)
-
-        #['git', 'fetch', 'origin', '--prune']
-        execute = g.execute('git fetch -v --progress "origin"')
-        for e in execute:
-            print(e)
-        print('ss' + str(execute))
+        # replace = str(rootPath + moduleName).replace("\\", "/")
+        # print(replace)
+        # g = Git(replace)
+        #
+        # #['git', 'fetch', 'origin', '--prune']
+        # execute = g.execute('git fetch -v --progress "origin"')
+        # for e in execute:
+        #     print(e)
+        # print('ss' + str(execute))
         repo = Repo(rootPath + moduleName)
         git = repo.git
+        git_execute = git.execute('git fetch --all')
+        print(git_execute)
         log = git.log(
             'origin/' + branchName,
             # graph=True,
