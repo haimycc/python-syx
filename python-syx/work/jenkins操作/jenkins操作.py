@@ -258,8 +258,10 @@ if __name__ == "__main__":
     # 174
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.174:8081/jenkins/", "ZYFAX")
     # jenkins = JzPythonJenkins("admin", "a123456", "http://10.3.100.109:8081/jenkins/", "ZYFAX")
+    # 106
+    jenkins = JzPythonJenkins("admin", "a123456", "http://10.3.100.106:8081/jenkins/", "ZYFAX")
     # jenkins.getAllBranch("109", "master", True)
-    # 103
+    # 兴融
     # jenkins = JzPythonJenkins("admin", "zyxr123456", "http://192.168.9.152:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.104:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.126:8081/jenkins/", "ZYXR")
@@ -267,7 +269,7 @@ if __name__ == "__main__":
     # jenkins = JzPythonJenkins("admin", "111111", "http://192.168.9.154:8081/jenkins/", "ZYXR")
     # jenkins = JzPythonJenkins("admin", "Test123456", "http://192.168.9.122:8081/jenkins/", "ZYXR")
     # 175
-    jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
+    # jenkins = JzPythonJenkins("admin", "a123456", "http://192.168.9.175:8081/jenkins/", "ZYFAX")
     # jenkins.changeAllBulid("goldmaster")
     # 切换一个分支并且编译
     # jenkins.changeBranchAndBuild("AccountAdminWeb", "goldmaster")
@@ -303,10 +305,10 @@ if __name__ == "__main__":
     # jenkins9.changeByPatten('<execCommand/>', 'cd /usr/local/dubbox/; ./AdminApp.sh restart', False)
     # jenkins.changeByPatten('(?<=\<url>)https(?=\:)', 'http', True)
     # http改https
-    # config = jenkins.server.get_job_config("ZYFAX/AccountAdminWeb")
+    # config = jenkins.server.get_job_config("ZYFAX/AccountInterface")
     # print(config)
-    jenkins.changeByPatten('<remoteDirectory>webapps</remoteDirectory>',
-                           '''<remoteDirectory>tomcat</remoteDirectory>''',
+    jenkins.changeByPatten('<ignoreUpstremChanges>false</ignoreUpstremChanges>',
+                           '<ignoreUpstremChanges>true</ignoreUpstremChanges>',
                            False)
 
     # jenkins9.changeAllBulid('master')

@@ -60,4 +60,4 @@ if __name__ == '__main__':
         print("查询完毕")
     except Exception as e:
         print(e)
-    os.system('pause')
+    # os.system('pause')
