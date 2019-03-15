@@ -1,13 +1,14 @@
 file = open("D:\索引.txt", "w")
 
 
+#生成加索引sql
 def genSqlIndex(tableName, indexName, columnList, indexType='index'):
     sql = "ALTER TABLE {table_name} ADD {index_type} {index_name}({column_list});"
     sql_format = sql.format(table_name=tableName, index_type=indexType, index_name=indexName, column_list=columnList)
     print(sql_format)
     file.write(sql_format + "\n")
 
-
+#去掉索引
 def genDropSqlIndex(tableName, indexName, indexType='index'):
     sql = "ALTER TABLE {table_name} drop {index_type} {index_name};"
     sql_format = sql.format(table_name=tableName, index_type=indexType, index_name=indexName)
