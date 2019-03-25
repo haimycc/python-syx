@@ -2,6 +2,7 @@ import pymysql
 
 # sql连接模板
 # new_conn = pymysql.connect(“localhost”,“root”,你的密码",“TESTDB” )
+#mysql8.0连接
 new_conn = pymysql.connect('192.168.9.252', 'admin', 'admin', 'test')
 new_cursor = new_conn.cursor(pymysql.cursors.DictCursor)
 
